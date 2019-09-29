@@ -61,7 +61,6 @@ class GalleryActivity : AppCompatActivity() {
     private fun setupViewPager() {
         galleryAdapter = GalleryAdapter(supportFragmentManager)
         galleryAdapter.addFragment(BlankFragment(), "ONE")
-        galleryAdapter.addFragment(BlankFragment(), "TWO")
         viewPager.adapter = galleryAdapter
         tabLayout.setupWithViewPager(viewPager)
     }

@@ -1,8 +1,15 @@
 package com.watools.cleanerforwhatsapp
 
+import android.Manifest
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
 import com.watools.wacleaner.module.activity.GalleryActivity
 
 class MainActivity : AppCompatActivity() {
@@ -11,6 +18,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        startActivity(Intent(this, GalleryActivity::class.java))
+        Dexter.withActivity(this)
+            .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .withListener(object : PermissionListener{
+                override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                    startActivity(Intent(this@MainActivity, GalleryActivity::class.java))
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permission: PermissionRequest?,
+                    token: PermissionToken?
+                ) {
+                }
+
+                override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+                }
+
+            }).check()
     }
 }
