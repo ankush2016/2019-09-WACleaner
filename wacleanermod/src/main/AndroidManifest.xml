@@ -3,7 +3,10 @@
     package="com.watools.wacleaner.module">
 
     <application>
-        <activity android:name=".HomeActivity"></activity>
+        <activity
+            android:name=".activity.GalleryActivity"
+            android:theme="@style/WACleanerModuleTheme" />
+        <activity android:name=".activity.HomeActivity" />
     </application>
 
 </manifest>
