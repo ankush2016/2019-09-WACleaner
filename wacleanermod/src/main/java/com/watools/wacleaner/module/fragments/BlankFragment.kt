@@ -22,11 +22,7 @@ import kotlin.collections.ArrayList
 class BlankFragment : Fragment() {
 
     private lateinit var rvGallery: RecyclerView
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.fragment_blank, container, false)
         initViews(view)
         return view

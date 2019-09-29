@@ -12,6 +12,7 @@ import com.watools.wacleaner.module.model.GalleryItem
 import com.watools.wacleaner.module.R
 
 class RVGalleryAdapter(val dataList: ArrayList<GalleryItem>) : RecyclerView.Adapter<RVGalleryAdapter.GalleryItemViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryItemViewHolder {
         var view = LayoutInflater.from(parent.context).inflate(R.layout.cm_gallery_item, parent, false)
         return GalleryItemViewHolder(view)
@@ -33,6 +34,19 @@ class RVGalleryAdapter(val dataList: ArrayList<GalleryItem>) : RecyclerView.Adap
         val tvSize = itemView.findViewById<TextView>(R.id.tvSize)
 
         fun updateView(position: Int, dataList: ArrayList<GalleryItem>) {
+            updateMargins(position)
+
+            Glide.with(itemView.context).load(dataList[position].uri).into(ivThumbnail)
+            tvSize.text = dataList[position].fileSize
+            itemView.setOnLongClickListener(object : View.OnLongClickListener{
+                override fun onLongClick(v: View?): Boolean {
+
+                    return true
+                }
+            })
+        }
+
+        private fun updateMargins(position: Int) {
             var params = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             params.setMargins(0, 0, 0, 0)
             if (position % 3 == 0 || position % 3 == 1) {
@@ -40,9 +54,6 @@ class RVGalleryAdapter(val dataList: ArrayList<GalleryItem>) : RecyclerView.Adap
             }
             params.bottomMargin = margin
             clItemRoot.layoutParams = params
-
-            Glide.with(itemView.context).load(dataList[position].uri).into(ivThumbnail)
-            tvSize.text = dataList[position].fileSize
         }
     }
 }
