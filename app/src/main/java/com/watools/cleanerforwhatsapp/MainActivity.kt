@@ -11,6 +11,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.watools.wacleaner.module.activity.GalleryActivity
+import com.watools.wacleaner.module.activity.HomeActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
             .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             .withListener(object : PermissionListener{
                 override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-                    startActivity(Intent(this@MainActivity, GalleryActivity::class.java))
+                    startActivity(Intent(this@MainActivity, HomeActivity::class.java))
                 }
 
                 override fun onPermissionRationaleShouldBeShown(

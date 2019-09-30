@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.watools.wacleaner.module">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -10,7 +10,9 @@
         <activity
             android:name=".activity.GalleryActivity"
             android:theme="@style/WACleanerModuleTheme" />
-        <activity android:name=".activity.HomeActivity" />
+        <activity
+            android:name=".activity.HomeActivity"
+            android:theme="@style/WACleanerModuleTheme" />
     </application>
 
 </manifest>
