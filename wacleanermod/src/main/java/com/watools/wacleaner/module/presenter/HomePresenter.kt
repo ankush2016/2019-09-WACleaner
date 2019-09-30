@@ -14,9 +14,27 @@ class HomePresenter(val context: Context) {
         if (filesDirectory.exists()) {
             var files = filesDirectory.listFiles()
             for (i in files.indices) {
-                totalSize += files[i].length()
+                if (isToIncludeFolder(files[i])) {
+                    totalSize += getDirSize(files[i])
+                }
             }
         }
         return WAClenerUtility.getFileSize(totalSize)
+    }
+
+    private fun isToIncludeFolder(file: File) =
+            (file.absolutePath.endsWith(WACleanerConstants.WA_DATABASES) || file.absolutePath.endsWith(WACleanerConstants.WA_MEDIA))
+
+    private fun getDirSize(file: File?): Long {
+        var totalSize = 0L
+        var files = file?.listFiles()
+        for (i in files?.indices!!) {
+            if (files[i].isDirectory) {
+                totalSize += getDirSize(files[i])
+            } else {
+                totalSize += files[i].length()
+            }
+        }
+        return totalSize
     }
 }
