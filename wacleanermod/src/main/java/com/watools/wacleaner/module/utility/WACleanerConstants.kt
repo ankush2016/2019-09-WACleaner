@@ -7,5 +7,11 @@ object WACleanerConstants {
     val WA_DATABASES = "Databases"
     val WA_MEDIA = "Media"
 
-    val CALCULATING = "Calculating..."
+    val DIR_VIDEOS = "Videos"
+    val DIR_IMAGES = "Images"
+    val DIR_DATABASES = "Databases"
+
+    val VIDEOS_DIR_PATH = "/WhatsApp/Media/WhatsApp Video"
+    val IMAGES_DIR_PATH = "/WhatsApp/Media/WhatsApp Images"
+    val DATABASES_DIR_PATH = "/WhatsApp/Databases"
 }

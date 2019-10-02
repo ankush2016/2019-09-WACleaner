@@ -2,17 +2,18 @@ package com.watools.wacleaner.module.presenter
 
 import android.content.Context
 import android.os.Environment
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.watools.wacleaner.module.R
+import com.watools.wacleaner.module.adapter.RVWADirectoriesAdapter
+import com.watools.wacleaner.module.model.WADirectoryItem
 import com.watools.wacleaner.module.utility.WACleanerConstants
 import com.watools.wacleaner.module.utility.WAClenerUtility
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -67,5 +68,26 @@ class HomePresenter(val context: Context) {
                 tvTotalFiles.text = "$fileCount Files Found"
             }
         }
+    }
+
+    fun prepareWADirectoryDetails(rvWADirectories: RecyclerView) {
+        CoroutineScope(IO).launch {
+            var waDirectoryDetailList = ArrayList<WADirectoryItem>()
+
+            addItemsToWaDirList(WACleanerConstants.VIDEOS_DIR_PATH, WACleanerConstants.DIR_VIDEOS, waDirectoryDetailList)
+            addItemsToWaDirList(WACleanerConstants.IMAGES_DIR_PATH, WACleanerConstants.DIR_IMAGES, waDirectoryDetailList)
+            addItemsToWaDirList(WACleanerConstants.DATABASES_DIR_PATH, WACleanerConstants.DIR_DATABASES, waDirectoryDetailList)
+
+            withContext(Main) {
+                rvWADirectories.adapter = RVWADirectoriesAdapter(waDirectoryDetailList)
+                (rvWADirectories.adapter as RVWADirectoriesAdapter).notifyDataSetChanged()
+            }
+        }
+    }
+
+    private suspend fun addItemsToWaDirList(dirPath: String, dirName: String, waDirectoryDetailList: ArrayList<WADirectoryItem>) {
+        var totalSizeFileCountPair: Pair<String, Int> = WAClenerUtility.getDirSizeAndTotalFiles(dirPath)
+        var waDirectoryItem = WADirectoryItem(dirName, dirPath, totalSizeFileCountPair.second, totalSizeFileCountPair.first)
+        waDirectoryDetailList.add(waDirectoryItem)
     }
 }

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.watools.wacleaner.module.R
 import com.watools.wacleaner.module.adapter.RVWADirectoriesAdapter
+import com.watools.wacleaner.module.model.WADirectoryItem
 import com.watools.wacleaner.module.presenter.HomePresenter
 
 class HomeActivity : AppCompatActivity() {
@@ -17,6 +18,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var tvCalculating: TextView
     private lateinit var tvTotalFiles: TextView
     private lateinit var rvWADirectories: RecyclerView
+    private var waDirectoryDetailList = ArrayList<WADirectoryItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +40,9 @@ class HomeActivity : AppCompatActivity() {
         tvTotalFiles.visibility = View.INVISIBLE
         homePresenter.updateWATotalSize(this)
         rvWADirectories.layoutManager = LinearLayoutManager(this)
-        rvWADirectories.adapter = RVWADirectoriesAdapter()
+        rvWADirectories.adapter = RVWADirectoriesAdapter(waDirectoryDetailList)
+
+        homePresenter.prepareWADirectoryDetails(rvWADirectories)
     }
 
     override fun onResume() {
