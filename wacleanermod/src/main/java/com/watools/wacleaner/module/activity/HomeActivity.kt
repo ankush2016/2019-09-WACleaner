@@ -1,15 +1,22 @@
 package com.watools.wacleaner.module.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.watools.wacleaner.module.R
+import com.watools.wacleaner.module.adapter.RVWADirectoriesAdapter
 import com.watools.wacleaner.module.presenter.HomePresenter
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var homePresenter: HomePresenter
-    private lateinit var tvTotalSize:TextView
+    private lateinit var tvTotalSize: TextView
+    private lateinit var tvCalculating: TextView
+    private lateinit var tvTotalFiles: TextView
+    private lateinit var rvWADirectories: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,8 +27,22 @@ class HomeActivity : AppCompatActivity() {
 
     private fun initViews() {
         tvTotalSize = findViewById(R.id.tvTotalSize)
+        tvCalculating = findViewById(R.id.tvCalculating)
+        tvTotalFiles = findViewById(R.id.tvTotalFiles)
+        rvWADirectories = findViewById(R.id.rvWADirectories)
 
         homePresenter = HomePresenter(this)
-        tvTotalSize.text = homePresenter.getWATotalSize()
+
+        tvCalculating.visibility = View.VISIBLE
+        tvTotalSize.visibility = View.INVISIBLE
+        tvTotalFiles.visibility = View.INVISIBLE
+        homePresenter.updateWATotalSize(this)
+        rvWADirectories.layoutManager = LinearLayoutManager(this)
+        rvWADirectories.adapter = RVWADirectoriesAdapter()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        homePresenter.updateWATotalSize(this)
     }
 }

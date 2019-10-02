@@ -25,11 +25,25 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/tvCalculating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calculating..."
+            android:textColor="#ffffff"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/tvTotalSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/tvTotalSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@string/app_font"
-            android:text="5.25"
+            android:text="5.25 GB"
             android:textColor="#ffffff"
             android:textSize="60dp"
             android:textStyle="bold"
@@ -38,19 +52,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:text="GB"
-            android:textColor="#ffffff"
-            app:layout_constraintBottom_toBottomOf="@id/tvTotalSize"
-            app:layout_constraintStart_toEndOf="@id/tvTotalSize"
-            app:layout_constraintTop_toTopOf="@id/tvTotalSize"
-            app:layout_constraintVertical_bias="0.36" />
-
-        <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tvTotalFiles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -64,8 +66,10 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvWADirectories"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/vHeader" />

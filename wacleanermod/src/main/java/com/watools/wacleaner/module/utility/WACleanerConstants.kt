@@ -6,4 +6,6 @@ object WACleanerConstants {
 
     val WA_DATABASES = "Databases"
     val WA_MEDIA = "Media"
+
+    val CALCULATING = "Calculating..."
 }
