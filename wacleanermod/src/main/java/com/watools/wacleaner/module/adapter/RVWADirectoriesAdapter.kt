@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.watools.wacleaner.module.R
 import com.watools.wacleaner.module.model.WADirectoryItem
@@ -28,12 +29,13 @@ class RVWADirectoriesAdapter(val waDirectoryDetailList: ArrayList<WADirectoryIte
                 .append(waDirectoryDetailList[position]?.dirSize)
         holder.tvDirDetails.text = text
 
+        holder.ivDirectoryIconBg.setColorFilter(ContextCompat.getColor(holder.ivDirectoryIconBg.context, waDirectoryDetailList[position]?.bgColorCode), android.graphics.PorterDuff.Mode.SRC_IN)
+        holder.ivDirectoryIcon.setBackgroundResource(waDirectoryDetailList[position]?.icon)
         if (position == itemCount - 1) {
             holder.vDivider.visibility = View.INVISIBLE
         } else {
             holder.vDivider.visibility = View.VISIBLE
         }
-
     }
 
     class DirectoryItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
