@@ -77,6 +77,13 @@ class HomePresenter(val context: Context) {
             addItemsToWaDirList(WACleanerConstants.VIDEOS_DIR_PATH, WACleanerConstants.DIR_VIDEOS, waDirectoryDetailList)
             addItemsToWaDirList(WACleanerConstants.IMAGES_DIR_PATH, WACleanerConstants.DIR_IMAGES, waDirectoryDetailList)
             addItemsToWaDirList(WACleanerConstants.DATABASES_DIR_PATH, WACleanerConstants.DIR_DATABASES, waDirectoryDetailList)
+            addItemsToWaDirList(WACleanerConstants.DOCUMENTS_DIR_PATH, WACleanerConstants.DIR_DOCUMENTS, waDirectoryDetailList)
+            addItemsToWaDirList(WACleanerConstants.STICKERS_DIR_PATH, WACleanerConstants.DIR_STICKERS, waDirectoryDetailList)
+            addItemsToWaDirList(WACleanerConstants.GIFS_DIR_PATH, WACleanerConstants.DIR_GIFS, waDirectoryDetailList)
+            addItemsToWaDirList(WACleanerConstants.VOICE_NOTES_DIR_PATH, WACleanerConstants.DIR_VOICE_NOTES, waDirectoryDetailList)
+            addItemsToWaDirList(WACleanerConstants.AUDIOS_DIR_PATH, WACleanerConstants.DIR_AUDIOS, waDirectoryDetailList)
+            addItemsToWaDirList(WACleanerConstants.WALLPAPERS_DIR_PATH, WACleanerConstants.DIR_WALLPAPERS, waDirectoryDetailList)
+            addItemsToWaDirList(WACleanerConstants.PROFILE_PHOTOS_DIR_PATH, WACleanerConstants.DIR_PROFILE_PHOTOS, waDirectoryDetailList)
 
             withContext(Main) {
                 rvWADirectories.adapter = RVWADirectoriesAdapter(waDirectoryDetailList)

@@ -6,24 +6,35 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/ivDirectoryIcon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:id="@+id/ivDirectoryIconBg"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
+        android:tint="#ffcc00"
         app:layout_constraintBottom_toTopOf="@id/vDivider"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_filled_circle" />
+
+    <ImageView
+        android:id="@+id/ivDirectoryIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@id/ivDirectoryIconBg"
+        app:layout_constraintEnd_toEndOf="@id/ivDirectoryIconBg"
+        app:layout_constraintStart_toStartOf="@id/ivDirectoryIconBg"
+        app:layout_constraintTop_toTopOf="@id/ivDirectoryIconBg"
         app:srcCompat="@drawable/ic_android_black_24dp" />
 
     <TextView
         android:id="@+id/tvDirectoryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
         android:text="Documents"
         android:textColor="#000000"
         android:textSize="15dp"
@@ -35,8 +46,8 @@
         android:id="@+id/tvDirDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginLeft="19dp"
         android:text="522 files - 3.24 GB"
         app:layout_constraintBottom_toBottomOf="@id/ivDirectoryIcon"
         app:layout_constraintStart_toEndOf="@id/ivDirectoryIcon" />
@@ -49,6 +60,6 @@
         android:background="#BEBEBE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivDirectoryIcon" />
+        app:layout_constraintTop_toBottomOf="@id/ivDirectoryIconBg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
