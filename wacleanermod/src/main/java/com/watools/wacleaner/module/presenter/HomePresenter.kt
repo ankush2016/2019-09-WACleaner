@@ -94,7 +94,9 @@ class HomePresenter(val context: Context) {
 
     private suspend fun addItemsToWaDirList(dirPath: String, dirName: String, bgColor: Int, bgImage: Int, waDirectoryDetailList: ArrayList<WADirectoryItem>) {
         var totalSizeFileCountPair: Pair<String, Int> = WAClenerUtility.getDirSizeAndTotalFiles(dirPath)
-        var waDirectoryItem = WADirectoryItem(dirName, dirPath, totalSizeFileCountPair.second, totalSizeFileCountPair.first, bgColor, bgImage)
+        var totalFiles = WAClenerUtility.getTotalFiles(dirPath)
+        //var waDirectoryItem = WADirectoryItem(dirName, dirPath,  totalSizeFileCountPair.second, totalSizeFileCountPair.first, bgColor, bgImage)
+        var waDirectoryItem = WADirectoryItem(dirName, dirPath, totalFiles, totalSizeFileCountPair.first, bgColor, bgImage)
         waDirectoryDetailList.add(waDirectoryItem)
     }
 }

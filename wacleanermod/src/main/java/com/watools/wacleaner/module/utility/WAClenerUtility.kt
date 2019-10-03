@@ -1,12 +1,13 @@
 package com.watools.wacleaner.module.utility
 
 import android.os.Environment
-import kotlinx.coroutines.delay
 import java.io.File
 import kotlin.math.ln
 
 
 object WAClenerUtility {
+
+    var fileCount = 0
 
     fun getFileSize(bytes: Long): String {
         val unit = 1024
@@ -19,17 +20,16 @@ object WAClenerUtility {
     }
 
     suspend fun getDirSizeAndTotalFiles(dirPath: String): Pair<String, Int> {
-        //delay(5000)
         var totalSize = 0L
-        var fileCount = 0
+        fileCount = 0
         var filesDirectory = File(Environment.getExternalStorageDirectory().absolutePath + dirPath)
         if (filesDirectory.exists()) {
             var files = filesDirectory.listFiles()
-            fileCount = files.size
             for (i in files.indices) {
                 if (files[i].isDirectory) {
                     totalSize += getDirSize(files[i])
                 } else {
+                    fileCount++
                     totalSize += files[i].length()
                 }
             }
@@ -40,13 +40,32 @@ object WAClenerUtility {
     private fun getDirSize(file: File?): Long {
         var totalSize = 0L
         var files = file?.listFiles()
-        for (i in files?.indices!!) {
-            if (files[i].isDirectory) {
-                totalSize += getDirSize(files[i])
-            } else {
-                totalSize += files[i].length()
+        if (files != null) {
+            for (i in files?.indices!!) {
+                if (files[i].isDirectory) {
+                    totalSize += getDirSize(files[i])
+                } else {
+                    fileCount++
+                    totalSize += files[i].length()
+                }
             }
         }
         return totalSize
+    }
+
+    fun getTotalFiles(dirPath: String): Int {
+        var fileCountt = 0
+        var f = File(Environment.getExternalStorageDirectory().absolutePath + dirPath)
+        var files = f.listFiles()
+        if (files != null) {
+            for (i in files.indices) {
+                fileCountt++
+                var file = files[i]
+                if (file.isDirectory) {
+                    getTotalFiles(file.absolutePath)
+                }
+            }
+        }
+        return fileCountt
     }
 }

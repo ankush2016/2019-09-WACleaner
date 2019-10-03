@@ -25,8 +25,13 @@ class RVWADirectoriesAdapter(val waDirectoryDetailList: ArrayList<WADirectoryIte
 
     override fun onBindViewHolder(holder: DirectoryItemViewHolder, position: Int) {
         holder.tvDirectoryName.text = waDirectoryDetailList[position]?.dirName
-        var text = StringBuilder().append(waDirectoryDetailList[position]?.totalFiles).append(" Files - ")
-                .append(waDirectoryDetailList[position]?.dirSize)
+        var text: StringBuilder
+        if (waDirectoryDetailList[position]?.totalFiles != 0) {
+            text = StringBuilder().append(waDirectoryDetailList[position]?.totalFiles).append(" Files - ")
+                    .append(waDirectoryDetailList[position]?.dirSize)
+        } else {
+            text = StringBuilder("Empty")
+        }
         holder.tvDirDetails.text = text
 
         holder.ivDirectoryIconBg.setColorFilter(ContextCompat.getColor(holder.ivDirectoryIconBg.context, waDirectoryDetailList[position]?.bgColorCode), android.graphics.PorterDuff.Mode.SRC_IN)
