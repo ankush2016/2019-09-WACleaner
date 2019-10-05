@@ -20,14 +20,14 @@ import java.io.File
 
 class HomePresenter(val context: Context) {
 
-    var fileCount = 0
+    var totalWAFiles = 0
+    private lateinit var tvTotalFiles: TextView
 
     fun getWATotalSize(): String {
         var totalSize = 0L
         var filesDirectory = File(Environment.getExternalStorageDirectory().absolutePath + WACleanerConstants.WA_PATH)
         if (filesDirectory.exists()) {
             var files = filesDirectory.listFiles()
-            fileCount = files.size
             for (i in files.indices) {
                 if (isToIncludeFolder(files[i])) {
                     totalSize += getDirSize(files[i])
@@ -54,18 +54,17 @@ class HomePresenter(val context: Context) {
     }
 
     fun updateWATotalSize(activity: AppCompatActivity) {
-        fileCount = 0
         var tvCalculating = activity.findViewById<TextView>(R.id.tvCalculating)
         var tvTotalSize = activity.findViewById<TextView>(R.id.tvTotalSize)
-        var tvTotalFiles = activity.findViewById<TextView>(R.id.tvTotalFiles)
+        tvTotalFiles = activity.findViewById<TextView>(R.id.tvTotalFiles)
         CoroutineScope(IO).launch {
+            val fileCount = WAClenerUtility.getTotalFiles(WACleanerConstants.WA_PATH)
             val totalSize = getWATotalSize()
             withContext(Main) {
                 tvCalculating.visibility = View.INVISIBLE
                 tvTotalSize.visibility = View.VISIBLE
                 tvTotalFiles.visibility = View.VISIBLE
                 tvTotalSize.text = totalSize
-                tvTotalFiles.text = "$fileCount Files Found"
             }
         }
     }
@@ -88,6 +87,7 @@ class HomePresenter(val context: Context) {
             withContext(Main) {
                 rvWADirectories.adapter = RVWADirectoriesAdapter(waDirectoryDetailList)
                 (rvWADirectories.adapter as RVWADirectoriesAdapter).notifyDataSetChanged()
+                tvTotalFiles.text = "$totalWAFiles Files Found"
             }
         }
     }
@@ -95,6 +95,7 @@ class HomePresenter(val context: Context) {
     private suspend fun addItemsToWaDirList(dirPath: String, dirName: String, bgColor: Int, bgImage: Int, waDirectoryDetailList: ArrayList<WADirectoryItem>) {
         var totalSizeFileCountPair: Pair<String, Int> = WAClenerUtility.getDirSizeAndTotalFiles(dirPath)
         var totalFiles = WAClenerUtility.getTotalFiles(dirPath)
+        totalWAFiles += totalFiles
         //var waDirectoryItem = WADirectoryItem(dirName, dirPath,  totalSizeFileCountPair.second, totalSizeFileCountPair.first, bgColor, bgImage)
         var waDirectoryItem = WADirectoryItem(dirName, dirPath, totalFiles, totalSizeFileCountPair.first, bgColor, bgImage)
         waDirectoryDetailList.add(waDirectoryItem)
