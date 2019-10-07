@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.watools.wacleaner.module.R
+import com.watools.wacleaner.module.activity.HomeActivity
 import com.watools.wacleaner.module.adapter.RVWADirectoriesAdapter
 import com.watools.wacleaner.module.model.WADirectoryItem
 import com.watools.wacleaner.module.utility.WACleanerConstants
@@ -69,7 +70,7 @@ class HomePresenter(val context: Context) {
         }
     }
 
-    fun prepareWADirectoryDetails(rvWADirectories: RecyclerView) {
+    fun prepareWADirectoryDetails(rvWADirectories: RecyclerView, homeActivity: HomeActivity) {
         CoroutineScope(IO).launch {
             var waDirectoryDetailList = ArrayList<WADirectoryItem>()
 
@@ -85,7 +86,7 @@ class HomePresenter(val context: Context) {
             addItemsToWaDirList(WACleanerConstants.PROFILE_PHOTOS_DIR_PATH, WACleanerConstants.DIR_PROFILE_PHOTOS, R.color.color_2395f2, R.drawable.ic_wc_profile_photos, waDirectoryDetailList)
 
             withContext(Main) {
-                rvWADirectories.adapter = RVWADirectoriesAdapter(waDirectoryDetailList)
+                rvWADirectories.adapter = RVWADirectoriesAdapter(waDirectoryDetailList, homeActivity)
                 (rvWADirectories.adapter as RVWADirectoriesAdapter).notifyDataSetChanged()
                 tvTotalFiles.text = "$totalWAFiles Files Found"
             }

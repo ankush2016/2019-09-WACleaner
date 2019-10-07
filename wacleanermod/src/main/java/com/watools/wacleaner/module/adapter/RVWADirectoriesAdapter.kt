@@ -3,6 +3,8 @@ package com.watools.wacleaner.module.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -11,7 +13,7 @@ import com.watools.wacleaner.module.R
 import com.watools.wacleaner.module.model.WADirectoryItem
 import java.lang.StringBuilder
 
-class RVWADirectoriesAdapter(val waDirectoryDetailList: ArrayList<WADirectoryItem>) :
+class RVWADirectoriesAdapter(val waDirectoryDetailList: ArrayList<WADirectoryItem>, val checkChangeListener: CBCheckChangeListener) :
         RecyclerView.Adapter<RVWADirectoriesAdapter.DirectoryItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DirectoryItemViewHolder {
@@ -41,6 +43,10 @@ class RVWADirectoriesAdapter(val waDirectoryDetailList: ArrayList<WADirectoryIte
         } else {
             holder.vDivider.visibility = View.VISIBLE
         }
+
+        holder.cbClearData.setOnCheckedChangeListener { buttonView, isChecked ->
+            checkChangeListener.onCheckChanged(isChecked)
+        }
     }
 
     class DirectoryItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -49,5 +55,10 @@ class RVWADirectoriesAdapter(val waDirectoryDetailList: ArrayList<WADirectoryIte
         val vDivider = itemView.findViewById<View>(R.id.vDivider)
         val ivDirectoryIconBg = itemView.findViewById<ImageView>(R.id.ivDirectoryIconBg)
         val ivDirectoryIcon = itemView.findViewById<ImageView>(R.id.ivDirectoryIcon)
+        val cbClearData = itemView.findViewById<CheckBox>(R.id.cbClearData)
+    }
+
+    interface CBCheckChangeListener {
+        fun onCheckChanged(isChecked: Boolean)
     }
 }

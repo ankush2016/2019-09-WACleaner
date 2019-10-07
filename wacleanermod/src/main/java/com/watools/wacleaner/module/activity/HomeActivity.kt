@@ -12,9 +12,8 @@ import com.watools.wacleaner.module.R
 import com.watools.wacleaner.module.adapter.RVWADirectoriesAdapter
 import com.watools.wacleaner.module.model.WADirectoryItem
 import com.watools.wacleaner.module.presenter.HomePresenter
-import kotlinx.android.synthetic.main.clear_data_bottom_sheet.*
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), RVWADirectoriesAdapter.CBCheckChangeListener {
 
     private lateinit var homePresenter: HomePresenter
     private lateinit var tvTotalSize: TextView
@@ -47,9 +46,9 @@ class HomeActivity : AppCompatActivity() {
         tvTotalFiles.visibility = View.INVISIBLE
         homePresenter.updateWATotalSize(this)
         rvWADirectories.layoutManager = LinearLayoutManager(this)
-        rvWADirectories.adapter = RVWADirectoriesAdapter(waDirectoryDetailList)
+        rvWADirectories.adapter = RVWADirectoriesAdapter(waDirectoryDetailList, HomeActivity@this)
 
-        homePresenter.prepareWADirectoryDetails(rvWADirectories)
+        homePresenter.prepareWADirectoryDetails(rvWADirectories, this)
     }
 
     private fun setupBottomSheetClearData() {
@@ -65,11 +64,19 @@ class HomeActivity : AppCompatActivity() {
 
             override fun onSlide(view: View, p1: Float) {}
         })
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
     override fun onResume() {
         super.onResume()
         homePresenter.updateWATotalSize(this)
+    }
+
+    override fun onCheckChanged(isChecked: Boolean) {
+        if (isChecked) {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        } else {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
     }
 }
