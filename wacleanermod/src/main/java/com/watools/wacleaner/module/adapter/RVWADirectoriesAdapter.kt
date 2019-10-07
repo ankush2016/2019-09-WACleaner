@@ -1,15 +1,14 @@
 package com.watools.wacleaner.module.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.CompoundButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.watools.wacleaner.module.R
+import com.watools.wacleaner.module.activity.GalleryActivity
 import com.watools.wacleaner.module.model.WADirectoryItem
 import java.lang.StringBuilder
 
@@ -48,6 +47,9 @@ class RVWADirectoriesAdapter(val waDirectoryDetailList: ArrayList<WADirectoryIte
         holder.cbClearData.setOnCheckedChangeListener { buttonView, isChecked ->
             waDirectoryDetailList[position]?.isCheckBoxChecked = isChecked
             checkChangeListener.onCheckChanged(isChecked)
+        }
+        holder.itemView.setOnClickListener {
+            holder.itemView.context.startActivity(Intent(holder.itemView.context, GalleryActivity::class.java))
         }
     }
 
