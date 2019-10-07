@@ -6,4 +6,5 @@ data class WADirectoryItem(
         val totalFiles: Int,
         val dirSize: String,
         val bgColorCode: Int,
-        val icon: Int)
+        val icon: Int,
+        var isCheckBoxChecked: Boolean)

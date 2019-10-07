@@ -44,7 +44,9 @@ class RVWADirectoriesAdapter(val waDirectoryDetailList: ArrayList<WADirectoryIte
             holder.vDivider.visibility = View.VISIBLE
         }
 
+        holder.cbClearData.isChecked = waDirectoryDetailList[position]?.isCheckBoxChecked
         holder.cbClearData.setOnCheckedChangeListener { buttonView, isChecked ->
+            waDirectoryDetailList[position]?.isCheckBoxChecked = isChecked
             checkChangeListener.onCheckChanged(isChecked)
         }
     }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Environment
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.watools.wacleaner.module.R
@@ -18,6 +19,7 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.lang.Exception
 
 class HomePresenter(val context: Context) {
 
@@ -70,9 +72,8 @@ class HomePresenter(val context: Context) {
         }
     }
 
-    fun prepareWADirectoryDetails(rvWADirectories: RecyclerView, homeActivity: HomeActivity) {
+    fun prepareWADirectoryDetails(rvWADirectories: RecyclerView, homeActivity: HomeActivity, waDirectoryDetailList: ArrayList<WADirectoryItem>) {
         CoroutineScope(IO).launch {
-            var waDirectoryDetailList = ArrayList<WADirectoryItem>()
 
             addItemsToWaDirList(WACleanerConstants.VIDEOS_DIR_PATH, WACleanerConstants.DIR_VIDEOS, R.color.color_ca1d13, R.drawable.ic_wc_videos, waDirectoryDetailList)
             addItemsToWaDirList(WACleanerConstants.IMAGES_DIR_PATH, WACleanerConstants.DIR_IMAGES, R.color.color_9e25b4, R.drawable.ic_wc_images, waDirectoryDetailList)
@@ -98,7 +99,21 @@ class HomePresenter(val context: Context) {
         var totalFiles = WAClenerUtility.getTotalFiles(dirPath)
         totalWAFiles += totalFiles
         //var waDirectoryItem = WADirectoryItem(dirName, dirPath,  totalSizeFileCountPair.second, totalSizeFileCountPair.first, bgColor, bgImage)
-        var waDirectoryItem = WADirectoryItem(dirName, dirPath, totalFiles, totalSizeFileCountPair.first, bgColor, bgImage)
+        var waDirectoryItem = WADirectoryItem(dirName, dirPath, totalFiles, totalSizeFileCountPair.first, bgColor, bgImage, false)
         waDirectoryDetailList.add(waDirectoryItem)
+    }
+
+    fun clearDirectories(waDirectoryDetailList: ArrayList<WADirectoryItem>) {
+        try {
+            for (i in waDirectoryDetailList.indices) {
+                if (waDirectoryDetailList[i].isCheckBoxChecked) {
+                    if (File(Environment.getExternalStorageDirectory().absolutePath + waDirectoryDetailList[i].dirPath).isDirectory){
+                        WAClenerUtility.deleteFilesFromDir(waDirectoryDetailList[i].dirPath)
+                    }
+                }
+            }
+            Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+        }
     }
 }

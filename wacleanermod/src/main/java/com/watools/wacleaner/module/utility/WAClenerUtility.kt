@@ -1,6 +1,7 @@
 package com.watools.wacleaner.module.utility
 
 import android.os.Environment
+import org.apache.commons.io.FileUtils
 import java.io.File
 import kotlin.math.ln
 
@@ -67,5 +68,10 @@ object WAClenerUtility {
             }
         }
         return fileCountt
+    }
+
+    fun deleteFilesFromDir(dirPath: String) {
+        var directory = File(Environment.getExternalStorageDirectory().absolutePath + dirPath)
+        FileUtils.deleteDirectory(directory)
     }
 }

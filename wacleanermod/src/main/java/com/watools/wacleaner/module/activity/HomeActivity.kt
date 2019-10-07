@@ -13,12 +13,13 @@ import com.watools.wacleaner.module.adapter.RVWADirectoriesAdapter
 import com.watools.wacleaner.module.model.WADirectoryItem
 import com.watools.wacleaner.module.presenter.HomePresenter
 
-class HomeActivity : AppCompatActivity(), RVWADirectoriesAdapter.CBCheckChangeListener {
+class HomeActivity : AppCompatActivity(), RVWADirectoriesAdapter.CBCheckChangeListener, View.OnClickListener {
 
     private lateinit var homePresenter: HomePresenter
     private lateinit var tvTotalSize: TextView
     private lateinit var tvCalculating: TextView
     private lateinit var tvTotalFiles: TextView
+    private lateinit var llClearData: LinearLayout
     private lateinit var rvWADirectories: RecyclerView
     private var waDirectoryDetailList = ArrayList<WADirectoryItem>()
 
@@ -46,13 +47,14 @@ class HomeActivity : AppCompatActivity(), RVWADirectoriesAdapter.CBCheckChangeLi
         tvTotalFiles.visibility = View.INVISIBLE
         homePresenter.updateWATotalSize(this)
         rvWADirectories.layoutManager = LinearLayoutManager(this)
-        rvWADirectories.adapter = RVWADirectoriesAdapter(waDirectoryDetailList, HomeActivity@this)
+        rvWADirectories.adapter = RVWADirectoriesAdapter(waDirectoryDetailList, this)
 
-        homePresenter.prepareWADirectoryDetails(rvWADirectories, this)
+        homePresenter.prepareWADirectoryDetails(rvWADirectories, this, waDirectoryDetailList)
     }
 
     private fun setupBottomSheetClearData() {
         linearLayoutBottomSheet = findViewById(R.id.clearDataBottomSheetLayout)
+        llClearData = findViewById(R.id.llClearData)
         bottomSheetBehavior = BottomSheetBehavior.from(linearLayoutBottomSheet)
         bottomSheetBehavior.skipCollapsed = true
         bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -65,6 +67,7 @@ class HomeActivity : AppCompatActivity(), RVWADirectoriesAdapter.CBCheckChangeLi
             override fun onSlide(view: View, p1: Float) {}
         })
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        llClearData.setOnClickListener(this)
     }
 
     override fun onResume() {
@@ -73,10 +76,22 @@ class HomeActivity : AppCompatActivity(), RVWADirectoriesAdapter.CBCheckChangeLi
     }
 
     override fun onCheckChanged(isChecked: Boolean) {
-        if (isChecked) {
+        var isAnyItemChecked = false
+        for (i in waDirectoryDetailList.indices) {
+            if (waDirectoryDetailList[i].isCheckBoxChecked) {
+                isAnyItemChecked = true
+            }
+        }
+        if (isAnyItemChecked) {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         } else {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
+    }
+
+    override fun onClick(v: View?) {
+        if (v == llClearData) {
+            homePresenter.clearDirectories(waDirectoryDetailList)
         }
     }
 }
