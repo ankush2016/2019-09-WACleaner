@@ -1,6 +1,13 @@
 package com.watools.wacleaner.module.utility
 
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.Context
+import android.content.DialogInterface
 import android.os.Environment
+import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
+import com.watools.wacleaner.module.R
 import org.apache.commons.io.FileUtils
 import java.io.File
 import kotlin.math.ln
@@ -73,5 +80,21 @@ object WAClenerUtility {
     fun deleteFilesFromDir(dirPath: String) {
         var directory = File(Environment.getExternalStorageDirectory().absolutePath + dirPath)
         FileUtils.deleteDirectory(directory)
+    }
+
+    fun showAlertDialog(activity: AppCompatActivity, message: String, listener: AlertDialogClickListener) {
+        var dialog = Dialog(activity)
+        dialog.setContentView(R.layout.delete_alert_dialog_layout)
+        dialog.findViewById<Button>(R.id.btnDialogNo).setOnClickListener { dialog.dismiss() }
+        dialog.findViewById<Button>(R.id.btnDialogOk).setOnClickListener {
+            dialog.dismiss()
+            listener.onPositiveButtonClick(activity)
+        }
+        dialog.setCancelable(false)
+        dialog.show()
+    }
+
+    interface AlertDialogClickListener {
+        fun onPositiveButtonClick(activity: AppCompatActivity)
     }
 }

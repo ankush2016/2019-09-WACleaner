@@ -28,4 +28,6 @@ object WACleanerConstants {
     val AUDIOS_DIR_PATH = "/WhatsApp/Media/WhatsApp Audio"
     val WALLPAPERS_DIR_PATH = "/WhatsApp/Media/Wallpaper"
     val PROFILE_PHOTOS_DIR_PATH = "/WhatsApp/Media/WhatsApp Profile Photos"
+
+    val DELETE_MSG = "Are you sure you want to delete this permanently?"
 }

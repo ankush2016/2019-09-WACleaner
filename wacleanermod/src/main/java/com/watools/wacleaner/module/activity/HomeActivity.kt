@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,8 @@ import com.watools.wacleaner.module.R
 import com.watools.wacleaner.module.adapter.RVWADirectoriesAdapter
 import com.watools.wacleaner.module.model.WADirectoryItem
 import com.watools.wacleaner.module.presenter.HomePresenter
+import com.watools.wacleaner.module.utility.WACleanerConstants
+import com.watools.wacleaner.module.utility.WAClenerUtility
 
 class HomeActivity : AppCompatActivity(), RVWADirectoriesAdapter.CBCheckChangeListener, View.OnClickListener {
 
@@ -95,10 +98,14 @@ class HomeActivity : AppCompatActivity(), RVWADirectoriesAdapter.CBCheckChangeLi
 
     override fun onClick(v: View?) {
         if (v == llClearData) {
-            homePresenter.clearDirectories(waDirectoryDetailList)
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            homePresenter.updateWATotalSize(this)
-            homePresenter.prepareWADirectoryDetails(rvWADirectories, this, waDirectoryDetailList)
+            WAClenerUtility.showAlertDialog(this, WACleanerConstants.DELETE_MSG, object : WAClenerUtility.AlertDialogClickListener {
+                override fun onPositiveButtonClick(activity: AppCompatActivity) {
+                    homePresenter.clearDirectories(waDirectoryDetailList)
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                    homePresenter.updateWATotalSize(activity)
+                    homePresenter.prepareWADirectoryDetails(rvWADirectories, activity as HomeActivity, waDirectoryDetailList)
+                }
+            })
         }
     }
 }
