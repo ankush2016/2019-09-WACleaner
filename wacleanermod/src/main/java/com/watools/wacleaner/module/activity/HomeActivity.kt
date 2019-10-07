@@ -49,7 +49,10 @@ class HomeActivity : AppCompatActivity(), RVWADirectoriesAdapter.CBCheckChangeLi
         rvWADirectories.layoutManager = LinearLayoutManager(this)
         rvWADirectories.adapter = RVWADirectoriesAdapter(waDirectoryDetailList, this)
 
+        /*
+        getting called from onResume()
         homePresenter.prepareWADirectoryDetails(rvWADirectories, this, waDirectoryDetailList)
+         */
     }
 
     private fun setupBottomSheetClearData() {
@@ -73,6 +76,7 @@ class HomeActivity : AppCompatActivity(), RVWADirectoriesAdapter.CBCheckChangeLi
     override fun onResume() {
         super.onResume()
         homePresenter.updateWATotalSize(this)
+        homePresenter.prepareWADirectoryDetails(rvWADirectories, this, waDirectoryDetailList)
     }
 
     override fun onCheckChanged(isChecked: Boolean) {
@@ -92,6 +96,9 @@ class HomeActivity : AppCompatActivity(), RVWADirectoriesAdapter.CBCheckChangeLi
     override fun onClick(v: View?) {
         if (v == llClearData) {
             homePresenter.clearDirectories(waDirectoryDetailList)
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            homePresenter.updateWATotalSize(this)
+            homePresenter.prepareWADirectoryDetails(rvWADirectories, this, waDirectoryDetailList)
         }
     }
 }

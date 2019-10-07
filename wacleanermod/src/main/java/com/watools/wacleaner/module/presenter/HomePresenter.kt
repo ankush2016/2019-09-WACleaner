@@ -59,7 +59,7 @@ class HomePresenter(val context: Context) {
     fun updateWATotalSize(activity: AppCompatActivity) {
         var tvCalculating = activity.findViewById<TextView>(R.id.tvCalculating)
         var tvTotalSize = activity.findViewById<TextView>(R.id.tvTotalSize)
-        tvTotalFiles = activity.findViewById<TextView>(R.id.tvTotalFiles)
+        tvTotalFiles = activity.findViewById(R.id.tvTotalFiles)
         CoroutineScope(IO).launch {
             val fileCount = WAClenerUtility.getTotalFiles(WACleanerConstants.WA_PATH)
             val totalSize = getWATotalSize()
@@ -73,8 +73,9 @@ class HomePresenter(val context: Context) {
     }
 
     fun prepareWADirectoryDetails(rvWADirectories: RecyclerView, homeActivity: HomeActivity, waDirectoryDetailList: ArrayList<WADirectoryItem>) {
+        totalWAFiles = 0
+        waDirectoryDetailList.clear()
         CoroutineScope(IO).launch {
-
             addItemsToWaDirList(WACleanerConstants.VIDEOS_DIR_PATH, WACleanerConstants.DIR_VIDEOS, R.color.color_ca1d13, R.drawable.ic_wc_videos, waDirectoryDetailList)
             addItemsToWaDirList(WACleanerConstants.IMAGES_DIR_PATH, WACleanerConstants.DIR_IMAGES, R.color.color_9e25b4, R.drawable.ic_wc_images, waDirectoryDetailList)
             addItemsToWaDirList(WACleanerConstants.DATABASES_DIR_PATH, WACleanerConstants.DIR_DATABASES, R.color.color_049587, R.drawable.ic_wc_database, waDirectoryDetailList)
@@ -111,6 +112,7 @@ class HomePresenter(val context: Context) {
                         WAClenerUtility.deleteFilesFromDir(waDirectoryDetailList[i].dirPath)
                     }
                 }
+                waDirectoryDetailList[i].isCheckBoxChecked = false
             }
             Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
