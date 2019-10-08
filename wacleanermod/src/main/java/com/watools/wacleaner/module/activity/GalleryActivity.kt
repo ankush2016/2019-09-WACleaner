@@ -19,7 +19,7 @@ class GalleryActivity : AppCompatActivity() {
     private lateinit var galleryAdapter: GalleryAdapter
     private lateinit var toolbar: Toolbar
     private lateinit var viewPager: ViewPager
-    private lateinit var tabLayout: TabLayout
+    private lateinit var tabLayout: TabLayout//
     private lateinit var galleryPresenter: GalleryPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
