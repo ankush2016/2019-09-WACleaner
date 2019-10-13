@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +29,7 @@ import kotlin.collections.ArrayList
 class GalleryFragment() : Fragment() {
 
     private lateinit var rvGallery: RecyclerView
+    private lateinit var tvNoData:TextView
     private lateinit var dirPath:String
 
     constructor(dirPath: String) : this() {
@@ -42,12 +44,18 @@ class GalleryFragment() : Fragment() {
 
     private fun initViews(view: View?) {
         rvGallery = view?.findViewById(R.id.rvGallery)!!
+        tvNoData = view?.findViewById(R.id.tvNoData)
 
         CoroutineScope(IO).launch {
             var dataList = getDataFromStorage()
-            withContext(Main){
-                rvGallery.layoutManager = GridLayoutManager(view.context, 3)
-                rvGallery.adapter = RVGalleryAdapter(dataList)
+            withContext(Main) {
+                if (dataList.size == 0) {
+                    rvGallery.visibility = View.INVISIBLE
+                    tvNoData.visibility = View.VISIBLE
+                } else {
+                    rvGallery.layoutManager = GridLayoutManager(view.context, 3)
+                    rvGallery.adapter = RVGalleryAdapter(dataList)
+                }
             }
         }
     }
