@@ -3,6 +3,7 @@ package com.watools.wacleaner.module.activity
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -12,6 +13,7 @@ import com.watools.wacleaner.module.R
 import com.watools.wacleaner.module.adapter.GalleryAdapter
 import com.watools.wacleaner.module.fragments.GalleryFragment
 import com.watools.wacleaner.module.presenter.GalleryPresenter
+import com.watools.wacleaner.module.utility.WACleanerConstants
 
 
 class GalleryActivity : AppCompatActivity() {
@@ -22,14 +24,12 @@ class GalleryActivity : AppCompatActivity() {
     private lateinit var tabLayout: TabLayout
     private lateinit var galleryPresenter: GalleryPresenter
 
+    private var folderType = "Images"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gallery)
         initViews()
-
-        setupToolbar()
-        setupViewPager()
-        galleryPresenter.changeTabsFont(tabLayout)
     }
 
     private fun initViews() {
@@ -38,6 +38,10 @@ class GalleryActivity : AppCompatActivity() {
         tabLayout = findViewById(R.id.tabLayoutGallery)
 
         galleryPresenter = GalleryPresenter(this)
+
+        setupToolbar()
+        setupViewPager()
+        galleryPresenter.changeTabsFont(tabLayout)
     }
 
     private fun setupToolbar() {
@@ -60,7 +64,8 @@ class GalleryActivity : AppCompatActivity() {
 
     private fun setupViewPager() {
         galleryAdapter = GalleryAdapter(supportFragmentManager)
-        galleryAdapter.addFragment(GalleryFragment(), "ONE")
+        galleryAdapter.addFragment(GalleryFragment(WACleanerConstants.IMAGES_RECEIVED_PATH), WACleanerConstants.TAB_RECEIVED)
+        galleryAdapter.addFragment(GalleryFragment(WACleanerConstants.IMAGES_SENT_PATH), WACleanerConstants.TAB_SENT)
         viewPager.adapter = galleryAdapter
         tabLayout.setupWithViewPager(viewPager)
     }

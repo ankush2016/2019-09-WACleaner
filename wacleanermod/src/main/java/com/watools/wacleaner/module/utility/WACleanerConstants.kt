@@ -29,5 +29,11 @@ object WACleanerConstants {
     val WALLPAPERS_DIR_PATH = "/WhatsApp/Media/Wallpaper"
     val PROFILE_PHOTOS_DIR_PATH = "/WhatsApp/Media/WhatsApp Profile Photos"
 
+    val IMAGES_SENT_PATH = "/WhatsApp/Media/WhatsApp Images/Sent"
+    val IMAGES_RECEIVED_PATH = "/WhatsApp/Media/WhatsApp Images/"
+
     val DELETE_MSG = "Are you sure you want to delete this permanently?"
+    val TAB_RECEIVED = "RECEIVED"
+    val TAB_SENT = "SENT"
+    val TAB_DUPLICATED = "DUPLICATED"
 }

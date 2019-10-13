@@ -3,6 +3,7 @@ package com.watools.wacleaner.module.fragments
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,14 +15,25 @@ import com.watools.wacleaner.module.adapter.RVGalleryAdapter
 import com.watools.wacleaner.module.model.GalleryItem
 import com.watools.wacleaner.module.utility.WACleanerConstants
 import com.watools.wacleaner.module.utility.WAClenerUtility
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.*
 import kotlin.Comparator
 import kotlin.collections.ArrayList
 
-class GalleryFragment : Fragment() {
+class GalleryFragment() : Fragment() {
 
     private lateinit var rvGallery: RecyclerView
+    private lateinit var dirPath:String
+
+    constructor(dirPath: String) : this() {
+        this.dirPath = dirPath
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.fragment_gallery, container, false)
         initViews(view)
@@ -31,14 +43,18 @@ class GalleryFragment : Fragment() {
     private fun initViews(view: View?) {
         rvGallery = view?.findViewById(R.id.rvGallery)!!
 
-        var dataList = getDataFromStorage()
-        rvGallery.layoutManager = GridLayoutManager(view.context, 3)
-        rvGallery.adapter = RVGalleryAdapter(dataList)
+        CoroutineScope(IO).launch {
+            var dataList = getDataFromStorage()
+            withContext(Main){
+                rvGallery.layoutManager = GridLayoutManager(view.context, 3)
+                rvGallery.adapter = RVGalleryAdapter(dataList)
+            }
+        }
     }
 
     private fun getDataFromStorage(): ArrayList<GalleryItem> {
         var dataList = ArrayList<GalleryItem>()
-        var filesDirectory = File(Environment.getExternalStorageDirectory().absolutePath + WACleanerConstants.SENT_IMAGES_PATH)
+        var filesDirectory = File(Environment.getExternalStorageDirectory().absolutePath + dirPath)
 
         if (filesDirectory.exists()) {
             var files = filesDirectory.listFiles()

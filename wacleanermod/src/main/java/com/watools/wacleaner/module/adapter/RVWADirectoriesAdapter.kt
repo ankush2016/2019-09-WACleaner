@@ -49,7 +49,8 @@ class RVWADirectoriesAdapter(val waDirectoryDetailList: ArrayList<WADirectoryIte
             checkChangeListener.onCheckChanged(isChecked)
         }
         holder.itemView.setOnClickListener {
-            holder.itemView.context.startActivity(Intent(holder.itemView.context, GalleryActivity::class.java))
+            var intent = Intent(holder.itemView.context, GalleryActivity::class.java)
+            holder.itemView.context.startActivity(intent)
         }
     }
 
