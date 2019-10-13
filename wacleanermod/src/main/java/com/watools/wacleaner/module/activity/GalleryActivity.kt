@@ -24,7 +24,7 @@ class GalleryActivity : AppCompatActivity() {
     private lateinit var tabLayout: TabLayout
     private lateinit var galleryPresenter: GalleryPresenter
 
-    private var folderType = "Images"
+    private lateinit var folderType :String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +38,7 @@ class GalleryActivity : AppCompatActivity() {
         tabLayout = findViewById(R.id.tabLayoutGallery)
 
         galleryPresenter = GalleryPresenter(this)
+        folderType = intent.getStringExtra(WACleanerConstants.INTENT_KEY_DIR_TYPE)
 
         setupToolbar()
         setupViewPager()
@@ -64,10 +65,42 @@ class GalleryActivity : AppCompatActivity() {
 
     private fun setupViewPager() {
         galleryAdapter = GalleryAdapter(supportFragmentManager)
-        galleryAdapter.addFragment(GalleryFragment(WACleanerConstants.IMAGES_RECEIVED_PATH), WACleanerConstants.TAB_RECEIVED)
-        galleryAdapter.addFragment(GalleryFragment(WACleanerConstants.IMAGES_SENT_PATH), WACleanerConstants.TAB_SENT)
+        setupAdapterWithFolderType()
         viewPager.adapter = galleryAdapter
         tabLayout.setupWithViewPager(viewPager)
+    }
+
+    private fun setupAdapterWithFolderType() {
+        when {
+            folderType.contentEquals(WACleanerConstants.DIR_VIDEOS) -> {
+                galleryAdapter.addFragment(GalleryFragment(WACleanerConstants.VIDEOS_RECEIVED_PATH), WACleanerConstants.TAB_RECEIVED)
+                galleryAdapter.addFragment(GalleryFragment(WACleanerConstants.VIDEOS_SENT_PATH), WACleanerConstants.TAB_SENT)
+            }
+            folderType.contentEquals(WACleanerConstants.DIR_IMAGES) -> {
+                galleryAdapter.addFragment(GalleryFragment(WACleanerConstants.IMAGES_RECEIVED_PATH), WACleanerConstants.TAB_RECEIVED)
+                galleryAdapter.addFragment(GalleryFragment(WACleanerConstants.IMAGES_SENT_PATH), WACleanerConstants.TAB_SENT)
+            }
+            folderType.contentEquals(WACleanerConstants.DIR_STICKERS) -> {
+                galleryAdapter.addFragment(GalleryFragment(WACleanerConstants.STICKERS_DIR_PATH), "")
+                tabLayout.visibility = View.GONE
+            }
+            folderType.contentEquals(WACleanerConstants.DIR_GIFS) -> {
+                galleryAdapter.addFragment(GalleryFragment(WACleanerConstants.GIFS_RECEIVED_PATH), WACleanerConstants.TAB_RECEIVED)
+                galleryAdapter.addFragment(GalleryFragment(WACleanerConstants.GIFS_SENT_PATH), WACleanerConstants.TAB_SENT)
+            }
+            folderType.contentEquals(WACleanerConstants.DIR_AUDIOS) -> {
+                galleryAdapter.addFragment(GalleryFragment(WACleanerConstants.AUDIOS_RECEIVED_PATH), WACleanerConstants.TAB_RECEIVED)
+                galleryAdapter.addFragment(GalleryFragment(WACleanerConstants.AUDIOS_SENT_PATH), WACleanerConstants.TAB_SENT)
+            }
+            folderType.contentEquals(WACleanerConstants.DIR_WALLPAPERS) -> {
+                galleryAdapter.addFragment(GalleryFragment(WACleanerConstants.WALLPAPERS_DIR_PATH), "")
+                tabLayout.visibility = View.GONE
+            }
+            folderType.contentEquals(WACleanerConstants.DIR_PROFILE_PHOTOS) -> {
+                galleryAdapter.addFragment(GalleryFragment(WACleanerConstants.PROFILE_PHOTOS_DIR_PATH), "")
+                tabLayout.visibility = View.GONE
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.watools.wacleaner.module.R
 import com.watools.wacleaner.module.activity.GalleryActivity
 import com.watools.wacleaner.module.model.WADirectoryItem
+import com.watools.wacleaner.module.utility.WACleanerConstants
 import java.lang.StringBuilder
 
 class RVWADirectoriesAdapter(val waDirectoryDetailList: ArrayList<WADirectoryItem>, val checkChangeListener: CBCheckChangeListener) :
@@ -50,6 +51,7 @@ class RVWADirectoriesAdapter(val waDirectoryDetailList: ArrayList<WADirectoryIte
         }
         holder.itemView.setOnClickListener {
             var intent = Intent(holder.itemView.context, GalleryActivity::class.java)
+            intent.putExtra(WACleanerConstants.INTENT_KEY_DIR_TYPE, waDirectoryDetailList[position]?.dirName)
             holder.itemView.context.startActivity(intent)
         }
     }

@@ -31,9 +31,19 @@ object WACleanerConstants {
 
     val IMAGES_SENT_PATH = "/WhatsApp/Media/WhatsApp Images/Sent"
     val IMAGES_RECEIVED_PATH = "/WhatsApp/Media/WhatsApp Images/"
+    val VIDEOS_SENT_PATH = "/WhatsApp/Media/WhatsApp Video/Sent"
+    val VIDEOS_RECEIVED_PATH = "/WhatsApp/Media/WhatsApp Video"
+    val DOCUMENTS_SENT_PATH = "/WhatsApp/Media/WhatsApp Documents/Sent"
+    val DOCUMENTS_RECEIVED_PATH = "/WhatsApp/Media/WhatsApp Documents"
+    val GIFS_SENT_PATH = "/WhatsApp/Media/WhatsApp Animated Gifs/Sent"
+    val GIFS_RECEIVED_PATH = "/WhatsApp/Media/WhatsApp Animated Gifs"
+    val AUDIOS_SENT_PATH = "/WhatsApp/Media/WhatsApp Audio/Sent"
+    val AUDIOS_RECEIVED_PATH = "/WhatsApp/Media/WhatsApp Audio"
 
     val DELETE_MSG = "Are you sure you want to delete this permanently?"
     val TAB_RECEIVED = "RECEIVED"
     val TAB_SENT = "SENT"
     val TAB_DUPLICATED = "DUPLICATED"
+
+    val INTENT_KEY_DIR_TYPE = "directory_type"
 }
