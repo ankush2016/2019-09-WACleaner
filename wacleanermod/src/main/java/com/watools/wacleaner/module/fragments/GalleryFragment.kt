@@ -19,11 +19,11 @@ import java.util.*
 import kotlin.Comparator
 import kotlin.collections.ArrayList
 
-class BlankFragment : Fragment() {
+class GalleryFragment : Fragment() {
 
     private lateinit var rvGallery: RecyclerView
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view = inflater.inflate(R.layout.fragment_blank, container, false)
+        var view = inflater.inflate(R.layout.fragment_gallery, container, false)
         initViews(view)
         return view
     }

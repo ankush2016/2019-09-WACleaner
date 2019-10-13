@@ -2,7 +2,7 @@ package com.watools.wacleaner.module.activity
 
 import android.graphics.Typeface
 import android.os.Bundle
-import android.view.ViewGroup
+import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -10,7 +10,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.watools.wacleaner.module.R
 import com.watools.wacleaner.module.adapter.GalleryAdapter
-import com.watools.wacleaner.module.fragments.BlankFragment
+import com.watools.wacleaner.module.fragments.GalleryFragment
 import com.watools.wacleaner.module.presenter.GalleryPresenter
 
 
@@ -19,7 +19,7 @@ class GalleryActivity : AppCompatActivity() {
     private lateinit var galleryAdapter: GalleryAdapter
     private lateinit var toolbar: Toolbar
     private lateinit var viewPager: ViewPager
-    private lateinit var tabLayout: TabLayout//
+    private lateinit var tabLayout: TabLayout
     private lateinit var galleryPresenter: GalleryPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,8 +60,15 @@ class GalleryActivity : AppCompatActivity() {
 
     private fun setupViewPager() {
         galleryAdapter = GalleryAdapter(supportFragmentManager)
-        galleryAdapter.addFragment(BlankFragment(), "ONE")
+        galleryAdapter.addFragment(GalleryFragment(), "ONE")
         viewPager.adapter = galleryAdapter
         tabLayout.setupWithViewPager(viewPager)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> onBackPressed()
+        }
+        return true
     }
 }
