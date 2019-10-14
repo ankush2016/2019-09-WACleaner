@@ -84,8 +84,8 @@ class HomePresenter(val context: Context) {
             addItemsToWaDirList(WACleanerConstants.GIFS_DIR_PATH, WACleanerConstants.DIR_GIFS, R.color.color_ea1b62, R.drawable.ic_wc_gifs, waDirectoryDetailList)
             addItemsToWaDirList(WACleanerConstants.VOICE_NOTES_DIR_PATH, WACleanerConstants.DIR_VOICE_NOTES, R.color.color_04bbd1, R.drawable.ic_wc_voice_notes, waDirectoryDetailList)
             addItemsToWaDirList(WACleanerConstants.AUDIOS_DIR_PATH, WACleanerConstants.DIR_AUDIOS, R.color.color_ff9603, R.drawable.ic_wc_audios, waDirectoryDetailList)
-            addItemsToWaDirList(WACleanerConstants.WALLPAPERS_DIR_PATH, WACleanerConstants.DIR_WALLPAPERS, R.color.color_607c8a, R.drawable.ic_wc_wallpaper, waDirectoryDetailList)
-            addItemsToWaDirList(WACleanerConstants.PROFILE_PHOTOS_DIR_PATH, WACleanerConstants.DIR_PROFILE_PHOTOS, R.color.color_2395f2, R.drawable.ic_wc_profile_photos, waDirectoryDetailList)
+            /*addItemsToWaDirList(WACleanerConstants.WALLPAPERS_DIR_PATH, WACleanerConstants.DIR_WALLPAPERS, R.color.color_607c8a, R.drawable.ic_wc_wallpaper, waDirectoryDetailList)
+            addItemsToWaDirList(WACleanerConstants.PROFILE_PHOTOS_DIR_PATH, WACleanerConstants.DIR_PROFILE_PHOTOS, R.color.color_2395f2, R.drawable.ic_wc_profile_photos, waDirectoryDetailList)*/
 
             withContext(Main) {
                 rvWADirectories.adapter = RVWADirectoriesAdapter(waDirectoryDetailList, homeActivity)

@@ -46,4 +46,6 @@ object WACleanerConstants {
     val TAB_DUPLICATED = "DUPLICATED"
 
     val INTENT_KEY_DIR_TYPE = "directory_type"
+    val VIEW_TYPE_GALLERY = "T1-Gallery"
+    val VIEW_TYPE_DOCUMENTS = "T2-Docs"
 }

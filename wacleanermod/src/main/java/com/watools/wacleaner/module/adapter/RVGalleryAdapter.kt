@@ -10,8 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.watools.wacleaner.module.model.GalleryItem
 import com.watools.wacleaner.module.R
+import com.watools.wacleaner.module.utility.WACleanerConstants
 
-class RVGalleryAdapter(val dataList: ArrayList<GalleryItem>) : RecyclerView.Adapter<RVGalleryAdapter.GalleryItemViewHolder>() {
+class RVGalleryAdapter(private val dataList: ArrayList<GalleryItem>) : RecyclerView.Adapter<RVGalleryAdapter.GalleryItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryItemViewHolder {
         var view = LayoutInflater.from(parent.context).inflate(R.layout.cm_gallery_item, parent, false)

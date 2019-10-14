@@ -4,12 +4,16 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.net.Uri
 import android.os.Environment
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.watools.wacleaner.module.R
+import com.watools.wacleaner.module.model.GalleryItem
 import org.apache.commons.io.FileUtils
 import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.ln
 
 
@@ -92,6 +96,36 @@ object WAClenerUtility {
         }
         dialog.setCancelable(false)
         dialog.show()
+    }
+
+    fun getDataFromStorage(dirPath: String): ArrayList<GalleryItem> {
+        var dataList = ArrayList<GalleryItem>()
+        var filesDirectory = File(Environment.getExternalStorageDirectory().absolutePath + dirPath)
+
+        if (filesDirectory.exists()) {
+            var files = filesDirectory.listFiles()
+            Arrays.sort(files, object : Comparator<File> {
+                override fun compare(f1: File?, f2: File?): Int {
+                    val s1 = f1?.lastModified()
+                    val s2 = f2?.lastModified()
+                    if (s1 != null && s2 != null) {
+                        if (s1 == s2) {
+                            return 0
+                        } else if (s1 < s2) {
+                            return 1
+                        } else {
+                            return -1
+                        }
+                    }
+                    return -1
+                }
+            })
+            for (i in files.indices) {
+                var item = files[i]
+                dataList.add(GalleryItem(item.name, Uri.fromFile(item), getFileSize(item.length())))
+            }
+        }
+        return dataList
     }
 
     interface AlertDialogClickListener {
