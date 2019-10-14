@@ -25,6 +25,9 @@ import java.io.File
 import java.util.*
 import kotlin.Comparator
 import kotlin.collections.ArrayList
+import android.app.ProgressDialog
+import com.watools.wacleaner.module.utility.CMViewDialog
+
 
 class GalleryFragment() : Fragment() {
 
@@ -46,9 +49,13 @@ class GalleryFragment() : Fragment() {
         rvGallery = view?.findViewById(R.id.rvGallery)!!
         tvNoData = view?.findViewById(R.id.tvNoData)
 
+        val dialog = CMViewDialog(activity)
+        dialog.showDialog()
+
         CoroutineScope(IO).launch {
             var dataList = getDataFromStorage()
             withContext(Main) {
+                dialog.hideDialog()
                 if (dataList.size == 0) {
                     rvGallery.visibility = View.INVISIBLE
                     tvNoData.visibility = View.VISIBLE
