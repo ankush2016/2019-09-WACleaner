@@ -12,7 +12,7 @@
         android:background="#008577"
         android:elevation="5dp"
         android:theme="@style/MyAppCustomTheme"
-        app:title="Status Saver" />
+        app:title="WA Cleaner" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayoutGallery"
